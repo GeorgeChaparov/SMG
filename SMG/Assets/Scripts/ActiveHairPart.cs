@@ -17,6 +17,8 @@ public class ActiveHairPart : HairPart
 
     private float m_TimeToHoldOn = 0.2f;
 
+    private float m_TimeToTry = 4f;
+
     private float m_TimeOfContactStop;
 
     private float m_TimeOfContactStart;
@@ -28,6 +30,8 @@ public class ActiveHairPart : HairPart
     private HairManager m_HairManager;
 
     private bool m_IsFacingRight = true;
+
+    private float m_StartTime = 0;
 
     public Rigidbody2D Rigidbody2D => m_Rigidbody2D;
 
@@ -63,6 +67,11 @@ public class ActiveHairPart : HairPart
 
     private void Update()
     {
+        if (!m_ShouldWrap)
+        {
+            m_StartTime = Time.time;
+        }
+
         if (!m_ShouldWrap && m_Rigidbody2D.constraints != RigidbodyConstraints2D.None)
         {
             m_HingeJoint2D.useMotor = true;
@@ -76,14 +85,18 @@ public class ActiveHairPart : HairPart
 
         if (!m_ShouldWrap)
         {
-            //m_HingeJoint2D.useLimits = false;
-
             m_TimeOfContactStart = 0;
 
             m_Rigidbody2D.constraints = RigidbodyConstraints2D.None;
             m_ActivatedWrapFromOther = false;
 
             m_Rigidbody2D.sharedMaterial = m_HairManager.LongHairPhysMat[0];
+        }
+
+        if (Time.time - m_StartTime > m_TimeToTry)
+        {
+            m_HingeJoint2D.useMotor = false;
+            return;
         }
 
         if (ActivatedWrapFromOther)
@@ -95,7 +108,6 @@ public class ActiveHairPart : HairPart
         if (Time.time - m_TimeOfContactStop > m_TimeToHoldOn && !m_ShouldHoldOn && !ActivatedWrapFromOther)
         {
             m_HingeJoint2D.useMotor = false;
-            //m_HingeJoint2D.useLimits = false;
             m_TimeOfContactStart = 0;
             m_Rigidbody2D.constraints = RigidbodyConstraints2D.None;
             m_Rigidbody2D.sharedMaterial = m_HairManager.LongHairPhysMat[0];
@@ -114,7 +126,6 @@ public class ActiveHairPart : HairPart
         if (m_ShouldWrap == true)
         {
             m_HingeJoint2D.useMotor = true;
-            //m_HingeJoint2D.useLimits = true;
             m_ShouldHoldOn = true;
             m_TimeOfContactStart = Time.time;
 

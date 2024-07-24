@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|c:\\users\\gigoto\\documents\\github\\smg\\smg\\assets\\scripts\\hairmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hairmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\assets\\scripts\\activehairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\activehairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|c:\\users\\gigoto\\documents\\github\\smg\\smg\\assets\\scripts\\hairmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hairmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|c:\\users\\gigoto\\documents\\github\\smg\\smg\\assets\\scripts\\hairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\assets\\scripts\\activehairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\activehairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,8 +26,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PlayerController.cs",
+              "DocumentMoniker": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\PlayerController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController.cs",
+              "ToolTip": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\PlayerController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerController.cs",
+              "ViewState": "AQIAACwBAAAAAAAAAAAwwAYCAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-15T09:19:29.531Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -43,41 +56,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "ActiveHairPart.cs",
               "DocumentMoniker": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\ActiveHairPart.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ActiveHairPart.cs",
               "ToolTip": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\ActiveHairPart.cs",
               "RelativeToolTip": "Assets\\Scripts\\ActiveHairPart.cs",
-              "ViewState": "AQIAAFAAAAAAAAAAAAAAAGgAAAAFAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABEAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-22T09:30:09.681Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "HairManager.cs",
               "DocumentMoniker": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\HairManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\HairManager.cs",
               "ToolTip": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\HairManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\HairManager.cs",
-              "ViewState": "AQIAACgBAAAAAAAAAAAAADYBAAA4AAAA",
+              "ViewState": "AQIAAEABAAAAAAAAAAAswEMBAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-23T08:54:26.102Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PlayerController.cs",
-              "DocumentMoniker": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\PlayerController.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController.cs",
-              "ToolTip": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\PlayerController.cs",
-              "RelativeToolTip": "Assets\\Scripts\\PlayerController.cs",
-              "ViewState": "AQIAAMkAAAAAAAAAAAAuwN0AAABxAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-15T09:19:29.531Z"
             }
           ]
         }

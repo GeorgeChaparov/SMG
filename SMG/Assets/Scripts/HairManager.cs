@@ -12,6 +12,8 @@ public class HairManager : MonoBehaviour
 
     public Action<bool, float> HairIsStretching;
 
+    public Action<bool> HairIsWrapped;
+
     [SerializeField]
     private PlayerController m_Player;
 
@@ -58,6 +60,8 @@ public class HairManager : MonoBehaviour
     private bool m_HasShotHair = false;
 
     private bool m_IsPullringHair = false;
+
+    private bool m_IsHairWrapped = false;
 
     private static HairManager _instance;
 
@@ -109,6 +113,11 @@ public class HairManager : MonoBehaviour
                 m_ActiveHairParts.Add(part);
                 Wrap += m_ActiveHairParts[index].SetWrap;
 
+                ++index;
+            }
+            else if (m_HairSegments[i].TryGetComponent<HairPart>(out HairPart segment))
+            {
+                segment.Id = index;
                 ++index;
             }
         }
@@ -241,7 +250,7 @@ public class HairManager : MonoBehaviour
             return;
         }
 
-        bool isWraped = false;
+        m_IsHairWrapped = false;
 
         float vecLenght = 1;
 
@@ -251,13 +260,13 @@ public class HairManager : MonoBehaviour
             {
                 if (m_ActiveHairParts[i].Rigidbody2D.constraints != RigidbodyConstraints2D.None)
                 {
-                    isWraped = true;
+                    m_IsHairWrapped = true;
                 }
              
                 continue;
             }
 
-            if (!isWraped)
+            if (!m_IsHairWrapped)
             {
                 break;
             }
@@ -299,9 +308,70 @@ public class HairManager : MonoBehaviour
             }
         }
 
+        if (m_IsHairWrapped)
+        {
+            HairIsWrapped?.Invoke(m_IsHairWrapped);
+        }
+
         HairIsStretching?.Invoke(m_IsStretched, vecLenght);
 
         m_LastTimeStretchTest = Time.time;
+    }
+
+    public Transform GetClosestPart(Vector3 to)
+    {
+        Transform closest = null;
+
+        float closestDistance = float.PositiveInfinity;
+
+        for (int i = 0; i < m_HairSegments.Length; i++)
+        {
+            if (i < m_ActiveHairParts.Count && m_ActiveHairParts[i].Rigidbody2D.constraints == RigidbodyConstraints2D.FreezeAll)
+            {
+                continue;
+            }
+
+            Transform part = m_HairSegments[i];
+
+            float distance = (part.position - to).magnitude;
+
+            if (distance <= 0.2f)
+            {
+                closest = part;
+                break;
+            }
+            else if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closest = part;
+            }
+        }
+
+        return closest;
+    }
+
+    public Transform GetNextPart(int partId)
+    {
+        if (partId - 1 < 0)
+        {
+            return m_HairSegments[partId];
+        }
+        else
+        {
+            return m_HairSegments[partId - 1];
+        }
+    }
+
+    public Transform GetPrevPart(int partId)
+    {
+        if (partId + 1 > m_HairSegments.Length - 1)
+        {
+            return m_HairSegments[partId];
+        }
+        else
+        {
+            return m_HairSegments[partId + 1];
+        }
     }
 
     public void ActivateNextPart(int partId)
