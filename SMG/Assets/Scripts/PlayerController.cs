@@ -18,8 +18,6 @@ public class PlayerController : MonoBehaviour
         Falling,
     }
 
-    public Func<Task> OnShootHair;
-
     [SerializeField]
     [Tooltip("It is set automatically by getting it from the object, but you can set it on your own if you want to. It will be created if it does not exist!")]
     private Rigidbody2D m_Rigidbody;
@@ -110,7 +108,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private bool m_IsHairStretching = false;
     [SerializeField]
-    private float m_IsHairStretchDistance = 0;
+    private float m_HairStretchDistance = 0;
 
     public bool IsFacingRight => m_IsFacingRight;
 
@@ -196,7 +194,7 @@ public class PlayerController : MonoBehaviour
         {
             ApplyJumpForce(m_JumpForce * 2);
         }
-
+        
         if (m_ShouldApplyJumpForce)
         {
             if (Time.time - m_JumpStartTime < m_MaxJumpTime)
@@ -212,23 +210,28 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-   
-        if (m_IsHairStretching)
-        {
-            Vector3 hairDir = (m_HairManager.HairPos - transform.position).normalized;
-
-            if ((m_HorizontalDirection < 0 && hairDir.x > 0) || (m_HorizontalDirection > 0 && hairDir.x < 0))
-            {
-                m_Rigidbody.velocity = (m_MovementSpeed / 10) * m_IsHairStretchDistance * hairDir;
-                return;
-            }
-        }
 
         if (m_HorizontalDirection != 0)
         {
             m_Animator.SetBool("Move", true);
 
-            m_Rigidbody.velocity = new Vector2(Mathf.Lerp(m_Rigidbody.velocity.x, m_HorizontalDirection * m_MovementSpeed, Time.fixedDeltaTime * m_MovementAccerelation), m_Rigidbody.velocity.y);
+            if (m_IsHairStretching)
+            {
+                Vector3 hairDir = (m_HairManager.HairPos - transform.position).normalized;
+
+                if ((m_HorizontalDirection < 0 && hairDir.x > 0) || (m_HorizontalDirection > 0 && hairDir.x < 0))
+                {
+                    m_Rigidbody.velocity = new Vector2(Mathf.Lerp(m_Rigidbody.velocity.x, -m_HorizontalDirection * m_MovementSpeed * (0.02f / m_HairStretchDistance), Time.fixedDeltaTime * m_MovementAccerelation), m_Rigidbody.velocity.y);
+                }
+                else
+                {
+                    m_Rigidbody.velocity = new Vector2(Mathf.Lerp(m_Rigidbody.velocity.x, m_HorizontalDirection * m_MovementSpeed, Time.fixedDeltaTime * m_MovementAccerelation), m_Rigidbody.velocity.y);
+                }
+            }
+            else
+            {
+                m_Rigidbody.velocity = new Vector2(Mathf.Lerp(m_Rigidbody.velocity.x, m_HorizontalDirection * m_MovementSpeed, Time.fixedDeltaTime * m_MovementAccerelation), m_Rigidbody.velocity.y);
+            }
         }
         else
         {
@@ -341,8 +344,6 @@ public class PlayerController : MonoBehaviour
             }
 
             m_Animator.SetBool("Trowing", true);
-
-            OnShootHair?.Invoke();
             await Task.Delay(100);
 
             m_Animator.SetBool("Trowing", false);
@@ -407,7 +408,7 @@ public class PlayerController : MonoBehaviour
     private void OnHairStretched(bool value, float distance) 
     {
         m_IsHairStretching = value;
-        m_IsHairStretchDistance = distance;
+        m_HairStretchDistance = distance;
     }
 
     public void Move(InputAction.CallbackContext context)

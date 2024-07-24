@@ -229,7 +229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -310,9 +310,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!1001 &696526553115632511
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -478,7 +475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3651713128037473146, guid: 21db4d8fd055ee44ea67c4ada212206a, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3651713128037473146, guid: 21db4d8fd055ee44ea67c4ada212206a, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -606,9 +603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!50 &6251673902161929526 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 5097174980395112541, guid: 21db4d8fd055ee44ea67c4ada212206a, type: 3}
@@ -835,7 +829,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -916,9 +910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!1001 &2189516699611276813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1001,7 +992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1082,9 +1073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!1001 &2241237681131479286
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1167,7 +1155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1248,9 +1236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!1001 &2315887308706675596
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1333,7 +1318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1414,9 +1399,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!1001 &2590788332998458743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1503,7 +1485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1584,9 +1566,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!1001 &3182971962152480899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1808,7 +1787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -1889,9 +1868,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!1001 &4555517245071076737
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1910,7 +1886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 70018861431351133, guid: 24d016bc567f38d42ab47a709719ab46, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 70018861431351133, guid: 24d016bc567f38d42ab47a709719ab46, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -2038,9 +2014,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!1001 &5328847525870066983
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2123,7 +2096,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -2194,9 +2167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!50 &8487587108121365791 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 4339826365700640824, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
@@ -2289,7 +2259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -2360,9 +2330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!50 &8531034167866368336 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 4339826365700640824, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
@@ -2606,7 +2573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -2677,9 +2644,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!50 &8304571294488570879 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 4339826365700640824, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
@@ -2772,7 +2736,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -2843,9 +2807,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!50 &8290763127154570792 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 4339826365700640824, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
@@ -3220,7 +3181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -3291,9 +3252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!50 &7493735361353772603 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 4339826365700640824, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
@@ -3386,7 +3344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -3457,9 +3415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!4 &6316754555715738784 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3977261597096797285, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
@@ -3957,7 +3912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -4028,9 +3983,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!50 &5837803299009320635 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 4339826365700640824, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
@@ -4059,7 +4011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1136005331281145922, guid: 74e35e6782f00df48822d2bbcd7e735a, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1136005331281145922, guid: 74e35e6782f00df48822d2bbcd7e735a, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -4196,9 +4148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!1001 &8512804593168703020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4285,7 +4234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -4356,9 +4305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!4 &4688701263618226761 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3977261597096797285, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
@@ -4725,7 +4671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_UseLimits
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6929790584045463909, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -4796,9 +4742,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2383bf9a560bb84da384b263db54f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LongHairPhysMat:
-  - {fileID: 6200000, guid: 396aedb8ced3dfa4abaf9dd0719e6084, type: 2}
-  - {fileID: 6200000, guid: 1dc4079b438602e4ca60a6b4f328e028, type: 2}
 --- !u!50 &4730665750143188789 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 4339826365700640824, guid: 69674db0ed05493499bb45b15e4fb4ab, type: 3}

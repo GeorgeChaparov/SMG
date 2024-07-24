@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 6926192448652129596}
   - component: {fileID: 3492867231619461641}
   - component: {fileID: 3059614010688233500}
+  - component: {fileID: 4643900211917199445}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -114,7 +115,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.56, y: 0.79}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -237,30 +238,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b7afaa728b997b488e4a55cefa8f8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MovementSpeed: 20
-  m_MovementAccerelation: 2
   m_Rigidbody: {fileID: 3849667498786063893}
-  m_FullJumpForce: 15
   m_GroundChecksize: {x: 0.26, y: 0.08}
-  m_FallingAccerelation: 200
-  m_FallingSpeed: 0.5
-  m_Graviry: 1
-  m_CoyoteTime: 0.075
-  m_GroundCheck: {fileID: 969291695984868763}
   m_GroundLayer:
     serializedVersion: 2
     m_Bits: 64
-  m_OnJumpHorizontalForce: 10
-  m_HairAnchors:
-  - {fileID: 0}
-  - {fileID: 0}
-  m_HairPosition: {x: 0, y: -0.18, z: 0}
-  m_HairSpeed: 25
-  m_HairSpawnRate: 0.02
-  m_HairAppliedForce: 15
-  m_PullingHairForce: 250
-  m_PullingHairDelay: 60
-  m_LongHair: {fileID: 0}
+  m_GroundCheck: {fileID: 969291695984868763}
+  m_MovementSpeed: 20
+  m_MovementAccerelation: 2
+  m_JumpForce: 6
+  m_MaxJumpTime: 0.2
+  m_CoyoteTime: 0.075
+  m_FallingAccerelation: 200
+  m_FallingSpeed: 0.5
+  m_Graviry: 1
+  m_IsHairStretching: 0
+  m_IsHairStretchDistance: 0
 --- !u!61 &3059614010688233500
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -293,16 +286,37 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.011689842, y: -0.0024705827}
+  m_Offset: {x: 0.011689842, y: 0.0013292432}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.41, y: 0.81}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.56, y: 0.79}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.28610778, y: 0.7819757}
+  m_Size: {x: 0.28610778, y: 0.77437603}
   m_EdgeRadius: 0
+--- !u!95 &4643900211917199445
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4365630581204102238}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 75e3244c05162054b93d8af0938e5d09, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
