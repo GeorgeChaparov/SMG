@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 
 public class HairManager : MonoBehaviour
 {
     public Action<bool> Wrap;
-
-    public Action<bool, float> HairIsStretching;
 
     public Action<bool> HairIsWrapped;
 
@@ -25,12 +25,6 @@ public class HairManager : MonoBehaviour
 
     [SerializeField]
     private GameObject[] m_HairAnchors;
-
-    [SerializeField]
-    private Vector3 m_HairPosition;
-
-    [SerializeField]
-    private float m_HairSpeed;
 
     [SerializeField]
     private float m_HairSpawnRate;
@@ -53,9 +47,7 @@ public class HairManager : MonoBehaviour
 
     private bool m_ShouldWrap = false;
 
-    private float m_LastTimeStretchTest;
-
-    private bool m_IsStretched = false;
+    private float m_LastTimeWrapTest;
 
     private bool m_HasShotHair = false;
 
@@ -86,7 +78,6 @@ public class HairManager : MonoBehaviour
 
     private void Awake()
     {
-
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
@@ -102,6 +93,8 @@ public class HairManager : MonoBehaviour
         Transform longHairTransform = m_LongHair.transform;
 
         int index = 0;
+        float mass = 2;
+
 
         for (int i = 0; i < m_LongHair.transform.childCount - 1; i++)
         {
@@ -110,22 +103,24 @@ public class HairManager : MonoBehaviour
             if (m_HairSegments[i].TryGetComponent<ActiveHairPart>(out ActiveHairPart part))
             {
                 part.Id = index;
+                part.Mass = mass;
                 m_ActiveHairParts.Add(part);
                 Wrap += m_ActiveHairParts[index].SetWrap;
-
-                ++index;
             }
             else if (m_HairSegments[i].TryGetComponent<HairPart>(out HairPart segment))
             {
                 segment.Id = index;
-                ++index;
+                segment.Mass = mass;            
             }
+
+            ++index;
+            mass += 0.5f;
         }
     }
 
     void Update()
     {
-        CheckForStretch();         
+        CheckForWrap();         
     }
 
     private void FixedUpdate()
@@ -137,14 +132,14 @@ public class HairManager : MonoBehaviour
     {
         await Task.Delay(m_ShootDelay);
 
-        for (int i = 1; i < m_HairAnchors[1].transform.parent.childCount; i++)
+        Transform shortHair = m_HairAnchors[1].transform.parent;
+
+        for (int i = 0; i < shortHair.childCount; i++)
         {
-            Transform currentPart = m_HairAnchors[1].transform.parent.GetChild(i);
+            Transform currentPart = shortHair.GetChild(i);
 
             currentPart.localScale = Vector3.zero;
         }
-
-        float mass = 2;
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0f;
@@ -166,12 +161,6 @@ public class HairManager : MonoBehaviour
                 m_ActiveHairParts[i].IsFacingRight = m_Player.IsFacingRight;
             }
 
-            Rigidbody2D currentPartRigidBody = currentPartTransform.GetComponent<Rigidbody2D>();
-
-            currentPartRigidBody.mass = mass;
-
-            mass += 0.5f;
-
             if (lastPart && i < m_HairSegments.Length - 5)
             {
                 lastPart.GetComponent<Rigidbody2D>().velocity = mouseDirection.normalized * m_HairAppliedForce;
@@ -191,11 +180,6 @@ public class HairManager : MonoBehaviour
     {
         m_IsPullringHair = true;
 
-        for (int i = 1; i < m_HairAnchors[1].transform.parent.childCount; i++)
-        {
-            m_HairAnchors[1].transform.parent.GetChild(i).position = new Vector3(m_Player.transform.position.x + i, m_Player.transform.position.y, m_Player.transform.position.z);
-        }
-
         ShouldWrap = false;
 
         for (int i = m_HairSegments.Length - 1; i >= 0; i--)
@@ -213,9 +197,14 @@ public class HairManager : MonoBehaviour
             currentPartTransform.localScale = Vector3.zero;
         }
 
-        for (int i = 1; i < m_HairAnchors[1].transform.parent.childCount; i++)
+        Transform shortHair = m_HairAnchors[1].transform.parent;
+
+        for (int i = 0; i < shortHair.childCount; i++)
         {
-            m_HairAnchors[1].transform.parent.GetChild(i).localScale = Vector3.one;
+            Transform part = shortHair.GetChild(i);
+
+            part.SetPositionAndRotation(m_Player.transform.position, m_Player.transform.rotation);
+            part.localScale = Vector3.one;
         }
 
         m_HasShotHair = false;
@@ -224,98 +213,96 @@ public class HairManager : MonoBehaviour
 
     private void ApplyTailPhysics()
     {
-        GameObject currentAnchor = m_HasShotHair ? m_HairAnchors[0] : m_HairAnchors[1];
+        if (m_HasShotHair)
+        {
+            m_HairAnchors[0].GetComponent<HingeJoint2D>().enabled = true;
+            m_HairAnchors[0].GetComponent<DistanceJoint2D>().enabled = true;
 
-        Vector2 directionToEndPos = m_Player.transform.position + m_HairPosition - currentAnchor.transform.position;
-        currentAnchor.GetComponent<Rigidbody2D>().velocity = (directionToEndPos * m_HairSpeed) - directionToEndPos;
+            m_HairAnchors[1].GetComponent<HingeJoint2D>().enabled = false;
+            m_HairAnchors[1].GetComponent<DistanceJoint2D>().enabled = false;
+        }
+        else
+        {
+            m_HairAnchors[1].GetComponent<HingeJoint2D>().enabled = true;
+            m_HairAnchors[1].GetComponent<DistanceJoint2D>().enabled = true;
+
+            m_HairAnchors[0].GetComponent<HingeJoint2D>().enabled = false;
+            m_HairAnchors[0].GetComponent<DistanceJoint2D>().enabled = false;
+        }
     }
 
-    private void CheckForStretch()
+    private void CheckForWrap()
     {
         if (!m_HasShotHair)
         {
-            if (m_IsStretched)
-            {
-                HairIsStretching?.Invoke(false, 0);
+            m_LastTimeWrapTest = Time.time;
 
-                m_IsStretched = false;
-            }
-
-            m_LastTimeStretchTest = Time.time;
+            HairIsWrapped?.Invoke(false);
             return;
         }
 
-        if (Time.time - m_LastTimeStretchTest < 0.05f)
+        if (Time.time - m_LastTimeWrapTest < 0.05f)
         {
             return;
         }
 
         m_IsHairWrapped = false;
+        ActiveHairPart lastWrappedPart = null;
 
-        float vecLenght = 1;
-
-        for (int i = 1; i < m_HairSegments.Length - 1; i++)
+        for (int i = 0; i < m_ActiveHairParts.Count - 1; i++)
         {
-            if (i < m_ActiveHairParts.Count)
+            if (m_ActiveHairParts[i].Rigidbody2D.constraints == RigidbodyConstraints2D.FreezeAll)
             {
-                if (m_ActiveHairParts[i].Rigidbody2D.constraints != RigidbodyConstraints2D.None)
-                {
-                    m_IsHairWrapped = true;
-                }
-             
-                continue;
-            }
+                lastWrappedPart = m_ActiveHairParts[i];
 
-            if (!m_IsHairWrapped)
-            {
-                break;
-            }
-
-            Transform segment = m_HairSegments[i];
-
-            Vector3 prevVec = (segment.position - m_HairSegments[i + 1].position);
-            Vector3 nextVec = (segment.position - m_HairSegments[i - 1].position);
-
-            float prevVecLenght = prevVec.magnitude;
-            float nextVecLenght = nextVec.magnitude;
-
-
-            if (prevVecLenght > 0.25f || nextVecLenght > 0.25f)
-            {
-                if (prevVecLenght < nextVecLenght)
-                {
-                    vecLenght = nextVecLenght;
-                }
-                else
-                {
-                    vecLenght = prevVecLenght;
-                }            
-            }
-
-            if (vecLenght != 1)
-            {
-                if (m_ShouldWrap)
-                {
-                    m_IsStretched = true;              
-                }
-            }
-            else
-            {
-                if (!m_ShouldWrap || m_IsStretched)
-                {
-                    m_IsStretched = false;
-                }
+                m_IsHairWrapped = true;
             }
         }
 
         if (m_IsHairWrapped)
         {
+            FreezePartsAfter(lastWrappedPart.Id);
             HairIsWrapped?.Invoke(m_IsHairWrapped);
         }
 
-        HairIsStretching?.Invoke(m_IsStretched, vecLenght);
+        m_LastTimeWrapTest = Time.time;
+    }
 
-        m_LastTimeStretchTest = Time.time;
+    public void PlayerHoldingPart(Transform part, float playerMass)
+    {
+        ChangePartsMassAfter(part, playerMass);
+        ChangePartsMassBefore(part);
+    }
+
+    private void ChangePartsMassAfter(Transform lastPart, float playerMass)
+    {
+        Transform currentPart = GetNextPart(lastPart.GetComponent<HairPart>().Id);
+
+        if (currentPart == lastPart)
+        {
+            return;
+        }
+
+        playerMass += 15;
+        currentPart.GetComponent<Rigidbody2D>().mass = playerMass;
+        ChangePartsMassAfter(currentPart, playerMass);
+    }
+
+    private void ChangePartsMassBefore(Transform lastPart)
+    {
+        Transform currentPart = GetPrevPart(lastPart.GetComponent<HairPart>().Id);
+
+        if (currentPart == lastPart)
+        {
+            return;
+        }
+        currentPart.GetComponent<Rigidbody2D>().mass = 10;
+        ChangePartsMassBefore(currentPart);
+    }
+
+    public Transform GetLastHairPart()
+    {
+        return m_HairSegments[m_HairSegments.Length - 1];
     }
 
     public Transform GetClosestPart(Vector3 to)
@@ -350,27 +337,56 @@ public class HairManager : MonoBehaviour
         return closest;
     }
 
-    public Transform GetNextPart(int partId)
+    public GameObject GetAnchor()
     {
-        if (partId - 1 < 0)
+        return m_HairAnchors[0];
+    }
+
+    public void ResetPartsMass()
+    {
+        for (int i = 0; i < m_HairSegments.Length; i++)
         {
-            return m_HairSegments[partId];
-        }
-        else
-        {
-            return m_HairSegments[partId - 1];
+            Transform part = m_HairSegments[i];
+            part.GetComponent<Rigidbody2D>().mass = part.GetComponent<HairPart>().Mass;
         }
     }
 
-    public Transform GetPrevPart(int partId)
+    public void FreezePartsAfter(int partId)
     {
-        if (partId + 1 > m_HairSegments.Length - 1)
+        ActiveHairPart part = m_ActiveHairParts[partId - 1];
+
+        if (part.Rigidbody2D.constraints != RigidbodyConstraints2D.FreezeAll)
         {
-            return m_HairSegments[partId];
+            part.Rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+
+        if (part.Id - 1 >= 0)
+        {
+            FreezePartsAfter(part.Id);
+        }    
+    }
+
+    public Transform GetNextPart(int currentPartId)
+    {
+        if (currentPartId - 1 < 0)
+        {
+            return m_HairSegments[currentPartId];
         }
         else
         {
-            return m_HairSegments[partId + 1];
+            return m_HairSegments[currentPartId - 1];
+        }
+    }
+
+    public Transform GetPrevPart(int currentPartId)
+    {
+        if (currentPartId + 1 > m_HairSegments.Length - 1)
+        {
+            return m_HairSegments[currentPartId];
+        }
+        else
+        {
+            return m_HairSegments[currentPartId + 1];
         }
     }
 

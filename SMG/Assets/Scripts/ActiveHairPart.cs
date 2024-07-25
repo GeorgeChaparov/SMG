@@ -112,7 +112,7 @@ public class ActiveHairPart : HairPart
             m_Rigidbody2D.constraints = RigidbodyConstraints2D.None;
             m_Rigidbody2D.sharedMaterial = m_HairManager.LongHairPhysMat[0];
 
-            m_HairManager.DeactivateNextPart(m_id);
+            m_HairManager.DeactivateNextPart(m_Id);
         }
     }
 
@@ -131,7 +131,7 @@ public class ActiveHairPart : HairPart
 
             m_Rigidbody2D.sharedMaterial = m_HairManager.LongHairPhysMat[1];
 
-            m_HairManager.ActivateNextPart(m_id);
+            m_HairManager.ActivateNextPart(m_Id);
         }
     }
 

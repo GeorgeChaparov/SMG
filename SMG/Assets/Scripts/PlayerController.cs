@@ -85,6 +85,8 @@ public class PlayerController : MonoBehaviour
 
     private HingeJoint2D m_HingeJoint2D;
 
+    private DistanceJoint2D m_DistanceJoint2D;
+
     private HairManager m_HairManager;
 
     /// <summary>
@@ -129,13 +131,9 @@ public class PlayerController : MonoBehaviour
 
     private PlayerMovementState m_MovementState = PlayerMovementState.Normal;
 
-    private bool m_IsHairStretching = false;
-
     private bool m_IsHairWrapped = false;
 
     private bool m_IsOnHair = false;
-
-    private float m_HairStretchDistance = 0;
 
     public bool IsFacingRight => m_IsFacingRight;
 
@@ -173,7 +171,6 @@ public class PlayerController : MonoBehaviour
         
         m_HairManager = HairManager.Instance;
 
-        m_HairManager.HairIsStretching += OnHairStretched;
         m_HairManager.HairIsWrapped += OnHairWrapped;
     }
 
@@ -249,6 +246,7 @@ public class PlayerController : MonoBehaviour
         if (!m_IsOnHair)
         {
             m_HingeJoint2D.enabled = false;
+            m_HingeJoint2D.connectedBody = m_HairManager.GetLastHairPart().GetComponent<Rigidbody2D>();
         }
 
         if (m_IsHairWrapped)
@@ -277,7 +275,13 @@ public class PlayerController : MonoBehaviour
     {
         if (m_HairManager.IsPullringHair)
         {
+            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+
             return;
+        }
+        else if (!m_HairManager.IsPullringHair && !m_HairManager.HasShotHair)
+        {
+            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
 
         switch (m_MovementState)
@@ -301,6 +305,13 @@ public class PlayerController : MonoBehaviour
 
     private void NormalMovement()
     {
+        m_Rigidbody.mass = 500;
+
+        if (m_HairManager.HasShotHair)
+        {
+            m_HairManager.ResetPartsMass();
+        }
+
         if (m_HorizontalDirection == 0)
         {
             m_Animator.SetBool("Move", false);
@@ -312,10 +323,12 @@ public class PlayerController : MonoBehaviour
         m_Rigidbody.velocity = new Vector2(Mathf.Lerp(m_Rigidbody.velocity.x, m_HorizontalDirection * m_MovementSpeed, Time.fixedDeltaTime * m_MovementAccerelation), m_Rigidbody.velocity.y);
     }
 
-    Rigidbody2D lastRb;
+    Transform lastTransform;
 
     private void SwingMovement()
     {
+        m_Rigidbody.mass = 60;
+
         Transform closestPart = m_HairManager.GetClosestPart(transform.position);
 
         if (!closestPart)
@@ -323,36 +336,63 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        if (m_HingeJoint2D.connectedBody == m_Rigidbody)
+        {
+            m_HingeJoint2D.connectedBody = closestPart.GetComponent<Rigidbody2D>();
+            lastTransform = closestPart;
+
+
+            m_HairManager.PlayerHoldingPart(closestPart, m_Rigidbody.mass);
+        }
+
         m_HingeJoint2D.enabled = true;
 
         if (m_HorizontalDirection != 0)
         {
-            m_HingeJoint2D.autoConfigureConnectedAnchor = false;
             m_Rigidbody.velocity = new Vector2(Mathf.Lerp(m_Rigidbody.velocity.x, m_HorizontalDirection * m_SwingForce, Time.fixedDeltaTime * m_MovementAccerelation), m_Rigidbody.velocity.y);
             return;
         }
-        else
-        {
-            m_HingeJoint2D.autoConfigureConnectedAnchor = true;
-        }
 
-        Rigidbody2D rb = closestPart.GetComponent<Rigidbody2D>();
-
-        if (rb != lastRb)
+        if (m_VerticalDirection != 0)
         {
-            m_HingeJoint2D.connectedBody = rb;
-            lastRb = rb;
+            if (closestPart != lastTransform)
+            {
+                m_HingeJoint2D.connectedBody = closestPart.GetComponent<Rigidbody2D>();
+                lastTransform = closestPart;
+
+                m_HairManager.PlayerHoldingPart(closestPart, m_Rigidbody.mass);
+            }
         }
 
         if (m_VerticalDirection > 0)
         {
+            m_HingeJoint2D.autoConfigureConnectedAnchor = true;
+
             Transform nextPart = m_HairManager.GetNextPart(closestPart.GetComponent<HairPart>().Id);
-            transform.Translate(m_ClimbingSpeed * Time.fixedDeltaTime * (nextPart.position - transform.position).normalized);
+
+            if (Vector3.Dot(nextPart.right, Vector3.up) >= 0.8f)
+            {
+                transform.Translate(m_ClimbingSpeed * Time.fixedDeltaTime * (nextPart.position - transform.position).normalized);
+            }           
         }
         else if (m_VerticalDirection < 0)
         {
+            m_HingeJoint2D.autoConfigureConnectedAnchor = true;
+
+            if (IsGrounded())
+            {
+                m_IsOnHair = false;
+
+                return;    
+            }
+
             Transform nextPart = m_HairManager.GetPrevPart(closestPart.GetComponent<HairPart>().Id);
+
             transform.Translate(m_ClimbingSpeed * Time.fixedDeltaTime * (nextPart.position - transform.position).normalized);
+        }
+        else
+        {
+            m_HingeJoint2D.autoConfigureConnectedAnchor = false;
         }
     }
 
@@ -371,28 +411,7 @@ public class PlayerController : MonoBehaviour
 
         m_Animator.SetBool("Move", true);
 
-        if (m_IsHairStretching)
-        {
-            StretchedHairMovement();
-        }
-        else
-        {
-            NormalMovement();
-        }
-    }
-
-    private void StretchedHairMovement()
-    {   
-        Vector3 hairDir = (m_HairManager.HairPos - transform.position).normalized;
-
-        if ((m_HorizontalDirection < 0 && hairDir.x > 0) || (m_HorizontalDirection > 0 && hairDir.x < 0))
-        {
-            m_Rigidbody.velocity = new Vector2(Mathf.Lerp(m_Rigidbody.velocity.x, -m_HorizontalDirection * m_MovementSpeed * (0.02f / m_HairStretchDistance), Time.fixedDeltaTime * m_MovementAccerelation), m_Rigidbody.velocity.y);
-        }
-        else
-        {
-            NormalMovement();
-        }
+        NormalMovement();
     }
 
     private void SafeEdge()
@@ -497,6 +516,16 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        if (m_MovementState == PlayerMovementState.OnHair)
+        {
+            return;
+        }
+
+        if (m_MovementState == PlayerMovementState.OnWall && m_HairManager.HasShotHair)
+        {
+            return;
+        }
+
         m_IsOnHair = false;
 
         if (!m_HairManager.HasShotHair)
@@ -523,6 +552,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            if (!IsGrounded())
+            {
+                return;
+            }
+
             m_Animator.SetBool("Pulling", true);
 
             await m_HairManager.RetractHair();
@@ -547,7 +581,13 @@ public class PlayerController : MonoBehaviour
         }
         else if (m_MovementState == PlayerMovementState.OnHair)
         {
-            m_Rigidbody.gravityScale = 0f;
+            m_Rigidbody.gravityScale = 20f;
+            return;
+        }
+
+        if (m_MovementState == PlayerMovementState.HairWrapped && !IsGrounded() && !m_HaveJumped)
+        {
+            m_Rigidbody.gravityScale = 3f;
             return;
         }
 
@@ -587,12 +627,6 @@ public class PlayerController : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1f;
         transform.localScale = localScale;
-    }
-
-    private void OnHairStretched(bool value, float distance) 
-    {
-        m_IsHairStretching = value;
-        m_HairStretchDistance = distance;
     }
 
     private void OnHairWrapped(bool value)
