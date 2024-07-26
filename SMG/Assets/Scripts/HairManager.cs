@@ -55,6 +55,8 @@ public class HairManager : MonoBehaviour
 
     private bool m_IsHairWrapped = false;
 
+    private bool m_IsHairStretched = false;
+
     private static HairManager _instance;
 
     public static HairManager Instance { get { return _instance; } }
@@ -63,7 +65,9 @@ public class HairManager : MonoBehaviour
 
     public bool HasShotHair => m_HasShotHair;
 
-    public bool IsPullringHair => m_IsPullringHair;
+    public bool IsPullingHair => m_IsPullringHair;
+
+    public bool IsHairStretched => m_IsHairStretched;
 
     public Vector3 HairPos { get; set; }
 
@@ -120,7 +124,8 @@ public class HairManager : MonoBehaviour
 
     void Update()
     {
-        CheckForWrap();         
+        CheckForWrap();  
+        CheckForStretch();
     }
 
     private void FixedUpdate()
@@ -215,18 +220,12 @@ public class HairManager : MonoBehaviour
     {
         if (m_HasShotHair)
         {
-            m_HairAnchors[0].GetComponent<HingeJoint2D>().enabled = true;
+            m_HairAnchors[0].GetComponent<FixedJoint2D>().enabled = true;
             m_HairAnchors[0].GetComponent<DistanceJoint2D>().enabled = true;
-
-            m_HairAnchors[1].GetComponent<HingeJoint2D>().enabled = false;
-            m_HairAnchors[1].GetComponent<DistanceJoint2D>().enabled = false;
         }
         else
         {
-            m_HairAnchors[1].GetComponent<HingeJoint2D>().enabled = true;
-            m_HairAnchors[1].GetComponent<DistanceJoint2D>().enabled = true;
-
-            m_HairAnchors[0].GetComponent<HingeJoint2D>().enabled = false;
+            m_HairAnchors[0].GetComponent<FixedJoint2D>().enabled = false;
             m_HairAnchors[0].GetComponent<DistanceJoint2D>().enabled = false;
         }
     }
@@ -305,6 +304,29 @@ public class HairManager : MonoBehaviour
         return m_HairSegments[m_HairSegments.Length - 1];
     }
 
+    private void CheckForStretch()
+    {
+        for (int i = 0; i < m_HairSegments.Length; i++)
+        {
+            if (i < m_ActiveHairParts.Count && m_ActiveHairParts[i].Rigidbody2D.constraints == RigidbodyConstraints2D.FreezeAll)
+            {
+                continue;
+            }
+
+            Transform part = m_HairSegments[i];
+
+            Transform prevPart = GetPrevPart(part.GetComponent<HairPart>().Id);
+
+            if (!m_IsHairStretched && (prevPart.position - part.position).magnitude > 0.255)
+            {
+                m_IsHairStretched = true;
+                break;
+            }
+
+            m_IsHairStretched = false;
+        }
+    }
+
     public Transform GetClosestPart(Vector3 to)
     {
         Transform closest = null;
@@ -320,14 +342,14 @@ public class HairManager : MonoBehaviour
 
             Transform part = m_HairSegments[i];
 
-            float distance = (part.position - to).magnitude;
-
-            if (distance <= 0.2f)
+            if (part.position.y < to.y - 0.2f)
             {
-                closest = part;
                 break;
             }
-            else if (distance < closestDistance)
+
+            float distance = (part.position - to).magnitude;
+
+            if (distance < closestDistance)
             {
                 closestDistance = distance;
                 closest = part;
@@ -353,6 +375,11 @@ public class HairManager : MonoBehaviour
 
     public void FreezePartsAfter(int partId)
     {
+        if (partId - 1 < 0)
+        {
+            return; 
+        }
+
         ActiveHairPart part = m_ActiveHairParts[partId - 1];
 
         if (part.Rigidbody2D.constraints != RigidbodyConstraints2D.FreezeAll)
@@ -360,10 +387,7 @@ public class HairManager : MonoBehaviour
             part.Rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
         }
 
-        if (part.Id - 1 >= 0)
-        {
-            FreezePartsAfter(part.Id);
-        }    
+        FreezePartsAfter(part.Id);
     }
 
     public Transform GetNextPart(int currentPartId)

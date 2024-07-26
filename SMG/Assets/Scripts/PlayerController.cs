@@ -75,6 +75,12 @@ public class PlayerController : MonoBehaviour
     private float m_SwingForce = 0.2f;
 
     [SerializeField]
+    private Vector3 m_PosToGrabHair;
+
+    [SerializeField]
+    private float m_GrabHairRadius = 0.2f;
+
+    [SerializeField]
     private float m_Graviry;
 
     private float m_JumpStartTime;
@@ -83,9 +89,9 @@ public class PlayerController : MonoBehaviour
 
     private Animator m_Animator;
 
-    private HingeJoint2D m_HingeJoint2D;
+    private TargetJoint2D m_TargetJoint2D;
 
-    private DistanceJoint2D m_DistanceJoint2D;
+    private FixedJoint2D m_FixedJoint2D;
 
     private HairManager m_HairManager;
 
@@ -161,14 +167,22 @@ public class PlayerController : MonoBehaviour
         m_Rigidbody.interpolation = RigidbodyInterpolation2D.Interpolate;
         m_Rigidbody.freezeRotation = true;
 
-        if (!m_HingeJoint2D)
+        if (!m_TargetJoint2D)
         {
-            if (!TryGetComponent<HingeJoint2D>(out m_HingeJoint2D))
+            if (!TryGetComponent<TargetJoint2D>(out m_TargetJoint2D))
             {
-                m_HingeJoint2D = gameObject.AddComponent<HingeJoint2D>();
+                m_TargetJoint2D = gameObject.AddComponent<TargetJoint2D>();
             }
         }
-        
+
+        if (!m_FixedJoint2D)
+        {
+            if (!TryGetComponent<FixedJoint2D>(out m_FixedJoint2D))
+            {
+                m_FixedJoint2D = gameObject.AddComponent<FixedJoint2D>();
+            }
+        }
+
         m_HairManager = HairManager.Instance;
 
         m_HairManager.HairIsWrapped += OnHairWrapped;
@@ -176,8 +190,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        SafeEdge();
-
         UpdateMovementState();
 
         if (Time.time - m_JumpBuffer < 0.2f && m_HaveJumped == true)
@@ -195,16 +207,16 @@ public class PlayerController : MonoBehaviour
             m_Animator.SetBool("Jump", false);
         }
 
-        if (!m_IsFacingRight && m_HorizontalDirection > 0f && !m_HairManager.IsPullringHair)
+        if (!m_IsFacingRight && m_HorizontalDirection > 0f && !m_HairManager.IsPullingHair)
         {
             Flip();
         }
-        else if (m_IsFacingRight && m_HorizontalDirection < 0f && !m_HairManager.IsPullringHair)
+        else if (m_IsFacingRight && m_HorizontalDirection < 0f && !m_HairManager.IsPullingHair)
         {
             Flip();
         }
 
-        if (m_HairManager.IsPullringHair)
+        if (m_HairManager.IsPullingHair)
         {
             Vector3 hairDir = (m_HairManager.HairPos - transform.position).normalized;
 
@@ -245,8 +257,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!m_IsOnHair)
         {
-            m_HingeJoint2D.enabled = false;
-            m_HingeJoint2D.connectedBody = m_HairManager.GetLastHairPart().GetComponent<Rigidbody2D>();
+            m_TargetJoint2D.enabled = false;
+            isInit = false;
         }
 
         if (m_IsHairWrapped)
@@ -273,13 +285,13 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyMovement() 
     {
-        if (m_HairManager.IsPullringHair)
+        if (m_HairManager.IsPullingHair)
         {
             m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
 
             return;
         }
-        else if (!m_HairManager.IsPullringHair && !m_HairManager.HasShotHair)
+        else if (!m_HairManager.IsPullingHair && !m_HairManager.HasShotHair)
         {
             m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
@@ -311,6 +323,10 @@ public class PlayerController : MonoBehaviour
         {
             m_HairManager.ResetPartsMass();
         }
+        else
+        {
+            m_FixedJoint2D.enabled = false;
+        }
 
         if (m_HorizontalDirection == 0)
         {
@@ -325,6 +341,8 @@ public class PlayerController : MonoBehaviour
 
     Transform lastTransform;
 
+    bool isInit = false;
+
     private void SwingMovement()
     {
         m_Rigidbody.mass = 60;
@@ -336,20 +354,26 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (m_HingeJoint2D.connectedBody == m_Rigidbody)
+        if (m_FixedJoint2D.enabled == false && !isInit)
         {
-            m_HingeJoint2D.connectedBody = closestPart.GetComponent<Rigidbody2D>();
             lastTransform = closestPart;
 
-
             m_HairManager.PlayerHoldingPart(closestPart, m_Rigidbody.mass);
-        }
 
-        m_HingeJoint2D.enabled = true;
+            m_FixedJoint2D.connectedBody = closestPart.GetComponent<Rigidbody2D>();
+            m_TargetJoint2D.target = closestPart.position;
+
+            m_FixedJoint2D.enabled = true;
+
+            isInit = true;
+        }
 
         if (m_HorizontalDirection != 0)
         {
-            m_Rigidbody.velocity = new Vector2(Mathf.Lerp(m_Rigidbody.velocity.x, m_HorizontalDirection * m_SwingForce, Time.fixedDeltaTime * m_MovementAccerelation), m_Rigidbody.velocity.y);
+            m_FixedJoint2D.connectedBody = closestPart.GetComponent<Rigidbody2D>();
+
+            m_Rigidbody.AddForce( new Vector2(m_HorizontalDirection * m_SwingForce, 0)); 
+            
             return;
         }
 
@@ -357,42 +381,51 @@ public class PlayerController : MonoBehaviour
         {
             if (closestPart != lastTransform)
             {
-                m_HingeJoint2D.connectedBody = closestPart.GetComponent<Rigidbody2D>();
                 lastTransform = closestPart;
-
                 m_HairManager.PlayerHoldingPart(closestPart, m_Rigidbody.mass);
             }
         }
 
         if (m_VerticalDirection > 0)
         {
-            m_HingeJoint2D.autoConfigureConnectedAnchor = true;
-
+            m_TargetJoint2D.enabled = true;
+            m_FixedJoint2D.enabled = false;
             Transform nextPart = m_HairManager.GetNextPart(closestPart.GetComponent<HairPart>().Id);
 
-            if (Vector3.Dot(nextPart.right, Vector3.up) >= 0.8f)
-            {
-                transform.Translate(m_ClimbingSpeed * Time.fixedDeltaTime * (nextPart.position - transform.position).normalized);
-            }           
+            Vector2 newDir = (new Vector2(nextPart.position.x, nextPart.position.y) - m_TargetJoint2D.target).normalized;
+
+            newDir.x = 5 * m_ClimbingSpeed * m_VerticalDirection * Time.fixedDeltaTime * newDir.x;
+            newDir.y = m_ClimbingSpeed * m_VerticalDirection * Time.fixedDeltaTime * newDir.y;
+
+            m_TargetJoint2D.target += newDir;
         }
         else if (m_VerticalDirection < 0)
         {
-            m_HingeJoint2D.autoConfigureConnectedAnchor = true;
+            m_TargetJoint2D.enabled = true;
+            m_FixedJoint2D.enabled = false;
 
             if (IsGrounded())
             {
                 m_IsOnHair = false;
 
-                return;    
+                return;
             }
 
-            Transform nextPart = m_HairManager.GetPrevPart(closestPart.GetComponent<HairPart>().Id);
+            Transform prevPart = m_HairManager.GetPrevPart(closestPart.GetComponent<HairPart>().Id);
 
-            transform.Translate(m_ClimbingSpeed * Time.fixedDeltaTime * (nextPart.position - transform.position).normalized);
+            Vector2 newDir = (new Vector2(prevPart.position.x, prevPart.position.y) - m_TargetJoint2D.target).normalized;
+
+            newDir.x = 10 * m_ClimbingSpeed * m_VerticalDirection * Time.fixedDeltaTime * newDir.x;
+            newDir.y = m_ClimbingSpeed * m_VerticalDirection * Time.fixedDeltaTime * newDir.y;
+
+            m_TargetJoint2D.target -= newDir;
         }
         else
         {
-            m_HingeJoint2D.autoConfigureConnectedAnchor = false;
+            m_FixedJoint2D.enabled = true;
+            m_FixedJoint2D.connectedBody = closestPart.GetComponent<Rigidbody2D>();
+            m_TargetJoint2D.enabled = false;
+            m_TargetJoint2D.target = (transform.position - closestPart.position) + closestPart.position;
         }
     }
 
@@ -403,6 +436,15 @@ public class PlayerController : MonoBehaviour
 
     private void WrappedHairMovement()
     {
+        m_FixedJoint2D.enabled = true;
+        m_FixedJoint2D.connectedBody = m_HairManager.GetLastHairPart().GetComponent<Rigidbody2D>();
+
+        if (m_HairManager.IsHairStretched && !IsGrounded())
+        {
+            m_IsOnHair = true;
+            m_HaveJumped = false;
+        }
+
         if (m_HorizontalDirection == 0)
         {
             m_Animator.SetBool("Move", false);
@@ -414,46 +456,9 @@ public class PlayerController : MonoBehaviour
         NormalMovement();
     }
 
-    private void SafeEdge()
-    {
-        if (IsGrounded() && m_HaveJumped == false)
-        {
-            return;
-        }
-
-        BoxCollider2D box = GetComponent<BoxCollider2D>();
-
-
-        Collider2D coll = Physics2D.OverlapBox(new Vector2(transform.position.x + box.bounds.extents.x, transform.position.y - box.bounds.extents.y + 0.04f), new Vector2(0.04f, 0.02f), 0, m_GroundLayer);
-
-        if (coll == null)
-        {
-            return;
-        }
-
-        if (m_UseSafeEdge == true)
-        {
-            Tilemap timelap = coll.GetComponent<Tilemap>();
-
-            Vector2 contactPoint = new Vector2(transform.position.x + box.bounds.extents.x + 0.1f, transform.position.y - box.bounds.extents.y + 0.03f);
-
-            Vector3Int cellPos = timelap.layoutGrid.WorldToCell(new Vector2(contactPoint.x, contactPoint.y + 0.36f));
-
-            Vector3 tilePos = timelap.layoutGrid.CellToWorld(cellPos);
-
-            float safeEdgeYPos = tilePos.y - 0.05f;
-
-            if (contactPoint.y <= tilePos.y && contactPoint.y >= safeEdgeYPos)
-            {
-                transform.position = new Vector3(transform.position.x, tilePos.y + box.bounds.extents.y + 0.1f, transform.position.z);
-                m_UseSafeEdge = false;
-            }
-        }
-    }
-
     public void Jump(InputAction.CallbackContext context)
     {
-        if (m_HairManager.IsPullringHair)
+        if (m_HairManager.IsPullingHair)
         {
             m_ShouldApplyJumpForce = false;
             return;
@@ -585,12 +590,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (m_MovementState == PlayerMovementState.HairWrapped && !IsGrounded() && !m_HaveJumped)
-        {
-            m_Rigidbody.gravityScale = 3f;
-            return;
-        }
-
         GroundedState state = CoyoteTime();
 
         switch (state)
@@ -652,10 +651,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        Vector3 playerPos = transform.position;
-        playerPos.y += 0.3f;
-
-        if (Physics2D.OverlapCircle(playerPos, 0.2f, LayerMask.GetMask("PlayerTale")))
+        if (Physics2D.OverlapCircle(transform.position + m_PosToGrabHair, m_GrabHairRadius, LayerMask.GetMask("PlayerTale")))
         {
             m_HaveJumped = false;
             m_IsOnHair = true;
@@ -701,11 +697,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Vector3 playerPos = transform.position;
-        playerPos.y += 0.3f;
-
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(playerPos, 0.2f);
+        Gizmos.DrawSphere(transform.position + m_PosToGrabHair, m_GrabHairRadius);
 
         Gizmos.color = Color.green;
         Gizmos.DrawCube(m_GroundCheck.position, m_GroundChecksize);

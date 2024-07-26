@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|c:\\users\\gigoto\\documents\\github\\smg\\smg\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|c:\\users\\gigoto\\documents\\github\\smg\\smg\\assets\\scripts\\hairmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\assets\\scripts\\hairmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hairmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\assets\\scripts\\activehairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\activehairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\assets\\scripts\\hairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\hairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\assets\\scripts\\activehairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D89942D-F6FE-F68C-AFED-6287278D903F}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\activehairpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -36,7 +36,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController.cs",
               "ToolTip": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\PlayerController.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerController.cs",
-              "ViewState": "AQIAAOsAAAAAAAAAAAAAAPgAAABmAAAA",
+              "ViewState": "AQIAAFABAAAAAAAAAAAqwGwBAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-15T09:19:29.531Z",
               "EditorCaption": ""
@@ -49,27 +49,27 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\HairManager.cs",
               "ToolTip": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\HairManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\HairManager.cs",
-              "ViewState": "AQIAABkBAAAAAAAAAAAswC4BAAAkAAAA",
+              "ViewState": "AQIAAE8BAAAAAAAAAAAmwF0BAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-23T08:54:26.102Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "HairPart.cs",
               "DocumentMoniker": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\HairPart.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\HairPart.cs",
               "ToolTip": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\HairPart.cs",
               "RelativeToolTip": "Assets\\Scripts\\HairPart.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAgAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAkAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-24T13:50:45.392Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ActiveHairPart.cs",
               "DocumentMoniker": "C:\\Users\\gigoto\\Documents\\GitHub\\SMG\\SMG\\Assets\\Scripts\\ActiveHairPart.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ActiveHairPart.cs",
