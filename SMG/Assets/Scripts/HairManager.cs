@@ -55,8 +55,6 @@ public class HairManager : MonoBehaviour
 
     private bool m_IsHairWrapped = false;
 
-    private bool m_IsHairStretched = false;
-
     private static HairManager _instance;
 
     public static HairManager Instance { get { return _instance; } }
@@ -66,8 +64,6 @@ public class HairManager : MonoBehaviour
     public bool HasShotHair => m_HasShotHair;
 
     public bool IsPullingHair => m_IsPullringHair;
-
-    public bool IsHairStretched => m_IsHairStretched;
 
     public Vector3 HairPos { get; set; }
 
@@ -125,7 +121,6 @@ public class HairManager : MonoBehaviour
     void Update()
     {
         CheckForWrap();  
-        CheckForStretch();
     }
 
     private void FixedUpdate()
@@ -282,7 +277,7 @@ public class HairManager : MonoBehaviour
             return;
         }
 
-        playerMass += 15;
+        playerMass += 20;
         currentPart.GetComponent<Rigidbody2D>().mass = playerMass;
         ChangePartsMassAfter(currentPart, playerMass);
     }
@@ -302,29 +297,6 @@ public class HairManager : MonoBehaviour
     public Transform GetLastHairPart()
     {
         return m_HairSegments[m_HairSegments.Length - 1];
-    }
-
-    private void CheckForStretch()
-    {
-        for (int i = 0; i < m_HairSegments.Length; i++)
-        {
-            if (i < m_ActiveHairParts.Count && m_ActiveHairParts[i].Rigidbody2D.constraints == RigidbodyConstraints2D.FreezeAll)
-            {
-                continue;
-            }
-
-            Transform part = m_HairSegments[i];
-
-            Transform prevPart = GetPrevPart(part.GetComponent<HairPart>().Id);
-
-            if (!m_IsHairStretched && (prevPart.position - part.position).magnitude > 0.255)
-            {
-                m_IsHairStretched = true;
-                break;
-            }
-
-            m_IsHairStretched = false;
-        }
     }
 
     public Transform GetClosestPart(Vector3 to)
