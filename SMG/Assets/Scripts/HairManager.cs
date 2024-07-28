@@ -277,7 +277,7 @@ public class HairManager : MonoBehaviour
             return;
         }
 
-        playerMass += 20;
+        playerMass += 10;
         currentPart.GetComponent<Rigidbody2D>().mass = playerMass;
         ChangePartsMassAfter(currentPart, playerMass);
     }
@@ -290,7 +290,7 @@ public class HairManager : MonoBehaviour
         {
             return;
         }
-        currentPart.GetComponent<Rigidbody2D>().mass = 10;
+        currentPart.GetComponent<Rigidbody2D>().mass = 20;
         ChangePartsMassBefore(currentPart);
     }
 
